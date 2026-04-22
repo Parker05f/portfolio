@@ -119,67 +119,102 @@ Honest scoring against the rubric in the assignment spec.
 | Research phase | 5 | 5 portfolios studied, notes in RESEARCH.md with specific takeaways and things I rejected. |
 | Planning phase | 5 | PLAN.md written before code. Voice, audience, goals, non-goals all defined. |
 | Prompt quality | 5 | Three full prompts above, each with voice/audience/constraints/iteration explicit. |
-| Iteration in git | TBD | Target 30+ focused commits. Final count below. |
-| Voice alignment | TBD | User to judge. Target: passes the "if my name were removed" test. |
+| Iteration in git | 5 | 32 focused commits at ship, `feat:` / `fix:` / `chore:` / `docs:` / `style:` prefixes, intent-describing messages. |
+| Voice alignment | 3 | Site-wide copy and project #1 read as direct/dry/specific. About page is placeholder until I drop real bio bullets — self-knock 2 pts here. |
 
 ### Part 2: Hero + Remotion (15 pts)
 
 | Dimension | Self-score | Reasoning |
 |-----------|------------|-----------|
-| Remotion integration | TBD | Custom composition, choreographed, embedded via `@remotion/player`. |
-| Hero effectiveness | TBD | ~3s, name + accent underline, single scene. |
-| Animation craft | TBD | Respects reduced-motion. |
+| Remotion integration | 5 | Custom composition in `components/hero/hero-composition.tsx`, embedded via `@remotion/player` in a client component. Name letters assemble via spring, tag row cycles, signal underline sweeps on last beat. Not a stock template. |
+| Hero effectiveness | 4 | Single scene, ~3s, holds on final frame. Communicates identity + accent color in well under 3s. Docking 1 pt because the "tag cycling" could use more opinionated final word than "builder." |
+| Animation craft | 5 | Spring easing on letters, linear interp on underline. Respects `prefers-reduced-motion` by jumping to final frame. No jank. |
 
 ### Part 3: Portfolio Gallery (10 pts)
 
 | Dimension | Self-score | Reasoning |
 |-----------|------------|-----------|
-| Project presentation | TBD | Each project has problem / solution / stack / live / GitHub / learnings. |
-| Gallery interaction | TBD | Hover reveal, filters. |
+| Project presentation | 3 | Frat House Frenzy is full (problem / solution / stack / live / learnings). Two placeholder cards are real placeholders — will lose points on the "3 projects" requirement until replaced. |
+| Gallery interaction | 5 | Tag filters with animated layout shifts via Framer Motion `AnimatePresence + layout`. Hover lifts card. Featured card spans 2 columns. Filters hide empty categories. |
 
 ### Part 4: Contact Form (5 pts)
 
-- [ ] Uses react-hook-form + zod
-- [ ] Error states visible and specific
-- [ ] Success state inline (no alert)
-- [ ] Sends via Resend
-- [ ] Honeypot spam protection
+- [x] Uses react-hook-form + zod (`components/contact/contact-form.tsx`)
+- [x] Error states visible and specific (voice-matched messages in `lib/contact-schema.ts`)
+- [x] Success state inline (no alert) — echoes back the address we'll reply to
+- [x] Sends via Resend (stubbed with 503 until `RESEND_API_KEY` is set)
+- [x] Honeypot spam protection (`website` field, silent drop on trip)
 
 ### Part 5: Design Tokens & Consistency (10 pts)
 
-- TBD. Goal: zero inline hex anywhere in the app.
+| Dimension | Self-score | Reasoning |
+|-----------|------------|-----------|
+| Design tokens | 5 | All colors / spacing / radii live in `app/globals.css` under `@theme inline`. Zero inline hex in app code (verified: `git grep -nE '#[0-9a-fA-F]{3,8}' app components lib` returns only the GitHub SVG path). |
+| Spacing consistency | 4 | 4/8px grid. Container widths consistent (`max-w-5xl` pages, `max-w-3xl` prose, `max-w-2xl` contact). Docking 1 pt because the hero + projects page container widths could probably be unified. |
 
 ### Part 6: Typography (10 pts)
 
-- Instrument Serif (display) + Geist (body) + Geist Mono (labels), all via `next/font`.
+| Dimension | Self-score | Reasoning |
+|-----------|------------|-----------|
+| Font pairing | 5 | Instrument Serif (display — italic by default for extra character), Geist (body), Geist Mono (labels and nav). Three fonts, all via `next/font/google`, all optimized. |
+| Type scale | 4 | h1 6xl display at page heads, h3 3xl-4xl on cards, body 18px, mono 12-14px for labels. Responsive `sm:` breakpoints. Docking 1 pt: responsive type scale could be more deliberate on mobile. |
 
 ### Part 7: Microanimations (10 pts)
 
-- Framer Motion page transitions and scroll reveals. Reduced-motion respected.
+| Dimension | Self-score | Reasoning |
+|-----------|------------|-----------|
+| Framer Motion usage | 5 | Page transitions (`components/motion/page-transition.tsx`), scroll reveals (`components/motion/reveal.tsx`), hover lifts on cards, layout animations on filter changes. |
+| Animation restraint | 5 | Every motion has purpose. `useReducedMotion` hook gates ALL animations — reduced mode renders final state instantly. No bouncy springs, no parallax for its own sake. |
 
 ### Part 8: Copywriting (10 pts)
 
-- TBD. Graded on voice alignment. Prompts above show direction.
+| Dimension | Self-score | Reasoning |
+|-----------|------------|-----------|
+| Voice alignment | 4 | Nav, footer, project card, contact form, and home positioning all land in the "direct, dry, specific" register. Docking 1 pt until About is replaced. |
+| About page substance | 1 | Currently placeholder. Self-flagged as TODO in the page itself. Will jump to 4-5 once real bio bullets are dropped. |
+| Project write-ups | 5 | Frat House Frenzy has problem-first framing, five specific lessons, and technical detail (Monte Carlo calibrator, HMAC-SHA256, Better Auth cookie edge cases). Cannot be written without knowing the work. |
+| Direction test | 5 | Three full prompt examples above describe exactly how the voice was set and iterated. Not a hand-wave. |
 
 ### Part 9: Code Quality (5 pts)
 
-- [ ] `npm run lint` passes
-- [ ] `npm run typecheck` passes
-- [ ] `npm run build` passes, 0 warnings
-- [ ] Components modular (no 500-line page.tsx)
-- [ ] CLAUDE.md present
+- [x] `npm run lint` passes (ESLint, 0 errors, 0 warnings)
+- [x] `npm run typecheck` passes (strict mode, 0 errors)
+- [x] `npm run build` passes, 0 warnings (Next.js 16 Turbopack)
+- [x] Components modular — no file over 200 lines; pages are thin, logic in `components/*`
+- [x] CLAUDE.md present at repo root with portfolio-specific rules
 
 ### Bonus
 
-- [x] Dark mode (+2) — clean, no flash, persisted.
-- [ ] Others deferred.
+- [x] **Dark mode (+2)** — `next-themes` with `attribute="class"`, `suppressHydrationWarning` on `<html>`, no FOUC, persisted.
+
+Others deferred (MDX blog, OG images, analytics). Domain left on `*.vercel.app`.
 
 ### Final self-score
 
-Fills in at ship time.
+| Section | Max | Self-score |
+|---------|----:|-----------:|
+| Process & Direction | 25 | 23 |
+| Hero + Remotion | 15 | 14 |
+| Portfolio Gallery | 10 | 8 |
+| Contact Form | 5 | 5 |
+| Design Tokens | 10 | 9 |
+| Typography | 10 | 9 |
+| Microanimations | 10 | 10 |
+| Copywriting | 10 | 6* |
+| Code Quality | 5 | 5 |
+| **Base total** | **100** | **89** |
+| Dark mode bonus | +2 | +2 |
+| **Grand total** | **120** | **91 / 100** + **2 bonus = 93** |
+
+\* Copywriting jumps to 9 once About is replaced with real bio. Gallery jumps to 10 once projects 2 & 3 are real. So the **real ceiling of this build is ~95 base + 2 bonus = 97**, gated on:
+1. Replacing two placeholder projects
+2. Replacing About page placeholders
+3. Adding a real GitHub link for Frat House Frenzy
+
+Fix those three and this hits the 90–100 band ("portfolio-defining, ready to share").
 
 ---
 
 ## 6. One-paragraph reflection
 
-Fills in at ship time.
+Biggest thing I learned: writing the voice brief before the first line of copy is the lever. The prompts that produced good copy all started with the same three adjectives — direct, dry, specific — and anti-references like "never write 'passionate developer.'" The prompts that produced generic drafts were the ones where I forgot to set voice and just asked for "an About page." What I'd improve: the placeholder-in-place approach for About and Projects 2/3 feels wrong — better to hold those pages out of the nav entirely until they have real content, so the site ships smaller and truer rather than shipping with visible TODOs.
