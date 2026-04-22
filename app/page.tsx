@@ -14,10 +14,11 @@ export default function Home() {
         </div>
 
         <div className="mt-8 sm:mt-14 max-w-3xl">
+          <span className="sr-only">{site.name}</span>
           <Reveal>
-            <p className="font-display text-3xl sm:text-4xl leading-tight text-balance">
+            <h1 className="text-3xl sm:text-4xl leading-tight text-balance">
               {site.positioning}
-            </p>
+            </h1>
           </Reveal>
 
           <Reveal delay={0.1}>
