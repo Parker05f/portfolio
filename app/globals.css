@@ -1,26 +1,193 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
+
+/* ---------------------------------------------------------------------------
+ * Design tokens
+ *
+ * All colors, spacing ramps, radii, and type sizes are defined here. Never
+ * use hardcoded hex or rgb values anywhere else in the app. If you need a
+ * new color, add it here and reference it via Tailwind utility or var().
+ *
+ * Palette: warm near-white / deep ink, with a single signal accent (lime
+ * chartreuse) and a secondary flame (hot coral). Playful but not busy.
+ * ------------------------------------------------------------------------ */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  /* Fonts */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-instrument-serif);
+
+  /* Colors — wired into Tailwind via shadcn's var-to-class bridge */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-signal: var(--signal);
+  --color-signal-foreground: var(--signal-foreground);
+  --color-flame: var(--flame);
+  --color-flame-foreground: var(--flame-foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Radii */
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  /* Surfaces — warm off-white, slight cream tint */
+  --background: oklch(0.985 0.005 85);
+  --foreground: oklch(0.18 0.01 260);
+  --ink: oklch(0.18 0.01 260);
+  --ink-soft: oklch(0.45 0.01 260);
+
+  /* Signal — chartreuse lime. This is the "stop the scroll" color. */
+  --signal: oklch(0.88 0.22 130);
+  --signal-foreground: oklch(0.18 0.01 260);
+
+  /* Flame — hot coral, used sparingly for hover + emphasis */
+  --flame: oklch(0.72 0.22 35);
+  --flame-foreground: oklch(0.98 0 0);
+
+  /* shadcn primitive mappings */
+  --card: oklch(1 0 0);
+  --card-foreground: var(--foreground);
+  --popover: oklch(1 0 0);
+  --popover-foreground: var(--foreground);
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --secondary: oklch(0.96 0.01 85);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(0.96 0.01 85);
+  --muted-foreground: var(--ink-soft);
+  --accent: var(--signal);
+  --accent-foreground: var(--signal-foreground);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.9 0.01 85);
+  --input: oklch(0.9 0.01 85);
+  --ring: var(--signal);
+
+  --radius: 0.5rem;
+}
+
+.dark {
+  /* Surfaces — deep ink with a faint blue cast, not pure black */
+  --background: oklch(0.16 0.015 265);
+  --foreground: oklch(0.96 0.005 85);
+  --ink: oklch(0.96 0.005 85);
+  --ink-soft: oklch(0.7 0.01 265);
+
+  --signal: oklch(0.88 0.22 130);
+  --signal-foreground: oklch(0.18 0.01 260);
+
+  --flame: oklch(0.72 0.22 35);
+  --flame-foreground: oklch(0.98 0 0);
+
+  --card: oklch(0.2 0.015 265);
+  --card-foreground: var(--foreground);
+  --popover: oklch(0.2 0.015 265);
+  --popover-foreground: var(--foreground);
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --secondary: oklch(0.24 0.015 265);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(0.24 0.015 265);
+  --muted-foreground: var(--ink-soft);
+  --accent: var(--signal);
+  --accent-foreground: var(--signal-foreground);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: var(--signal);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans antialiased;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Selection uses signal color — signature touch */
+  ::selection {
+    background-color: var(--signal);
+    color: var(--signal-foreground);
+  }
+
+  /* Focus rings use signal color */
+  :focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 2px;
+  }
+
+  /* Headings use display serif. Kept at default line-height from Tailwind. */
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  /* Respect reduced-motion globally — Framer Motion and CSS both honor this */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Utility helpers using tokens. These are named so intent is clear at call site. */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Underline that expands on hover — used on nav links */
+  .link-underline {
+    background-image: linear-gradient(var(--signal), var(--signal));
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0 2px;
+    transition: background-size 250ms ease;
+  }
+
+  .link-underline:hover,
+  .link-underline[data-active="true"] {
+    background-size: 100% 2px;
+  }
 }
