@@ -17,11 +17,12 @@ export default function ProjectsPage() {
             projects
           </p>
           <h1 className="mt-3 font-display text-5xl sm:text-6xl leading-none">
-            Things I&apos;ve shipped.
+            What I&apos;m building.
           </h1>
           <p className="mt-6 text-lg text-muted-foreground text-pretty">
-            Each writeup leads with the problem and ends with what broke. The
-            interesting part is usually the second one.
+            One writeup for now. Problem first, what broke last. The
+            interesting part is usually the second one. More will land here
+            as things ship.
           </p>
         </header>
 
