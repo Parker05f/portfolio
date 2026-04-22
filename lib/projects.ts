@@ -1,9 +1,5 @@
 /**
  * Source of truth for portfolio projects.
- *
- * TODO(parker): replace the two placeholder entries at the bottom with real
- * work. Each entry needs: problem, solution, tech stack, links, learnings.
- * See `frat-house-frenzy` for the voice and depth target.
  */
 
 export type Project = {
@@ -49,7 +45,6 @@ export const projects: Project[] = [
     tags: ["production", "game"],
     links: {
       live: "https://frathousefrenzy.vercel.app",
-      github: "",
     },
     learnings: [
       "Casino math is its own discipline. Hand-tuned paytables produce 80% or 140% RTP, not 96%. Ended up writing a Monte Carlo calibrator (500K spins × 5 seeds) that iterates on reel blank weights until it converges.",
@@ -60,41 +55,6 @@ export const projects: Project[] = [
     ],
     featured: true,
     status: "shipped",
-  },
-
-  // TODO(parker): replace with a real second project — even something small
-  // (a tool you built for yourself, a course project, a weekend hack) counts.
-  // Delete this placeholder once replaced. The rubric wants 3 projects total.
-  {
-    slug: "placeholder-2",
-    name: "Project two — placeholder",
-    oneLiner: "Something I built that I haven't written up yet.",
-    problem:
-      "Replace this copy with the real problem this project solves, in first person, one or two sentences.",
-    solution:
-      "Replace with what you actually built, the interesting technical choice, and the result.",
-    stack: ["TypeScript"],
-    tags: ["tool"],
-    links: {},
-    learnings: [
-      "Replace with a concrete lesson — something that broke, something that surprised you, something you'd do differently.",
-    ],
-    featured: false,
-    status: "in-progress",
-  },
-
-  {
-    slug: "placeholder-3",
-    name: "Project three — placeholder",
-    oneLiner: "Another small thing worth showing.",
-    problem: "Replace this copy.",
-    solution: "Replace this copy.",
-    stack: ["TypeScript"],
-    tags: ["experiment"],
-    links: {},
-    learnings: ["Replace with a real lesson."],
-    featured: false,
-    status: "in-progress",
   },
 ];
 
