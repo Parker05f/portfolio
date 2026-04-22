@@ -22,8 +22,12 @@ export function Navbar() {
           href="/"
           className="font-mono text-sm tracking-tight link-underline"
           data-active={pathname === "/"}
+          aria-label={`${site.name} home`}
         >
-          {site.name.toLowerCase()}
+          <span className="hidden sm:inline">
+            {site.name.toLowerCase()}
+          </span>
+          <span className="sm:hidden">pf.</span>
         </Link>
         <div className="flex items-center gap-1 sm:gap-2">
           <ul className="flex items-center gap-3 sm:gap-5 font-mono text-xs sm:text-sm">
