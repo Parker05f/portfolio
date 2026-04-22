@@ -1,23 +1,15 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Reveal } from "@/components/motion/reveal";
 import { PageTransition } from "@/components/motion/page-transition";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Who I am, how I got here, and what I'm building now.",
+    "Short version: I build full-stack software and care about the last 20% nobody else wants to finish.",
 };
 
-/**
- * TODO(parker): replace this copy with your own bullets. This is currently
- * a neutral draft that sounds like "direct, dry, specific" voice but doesn't
- * say anything only you could say. Grading is explicit that this page loses
- * points if it reads as AI template. Rewrite in first person with:
- *   - a specific origin moment (not "always loved computers")
- *   - what you're currently obsessed with
- *   - a concrete next step / what you're building toward
- *   - at least one odd detail only you know
- */
 export default function AboutPage() {
   return (
     <PageTransition>
@@ -34,64 +26,73 @@ export default function AboutPage() {
         <div className="space-y-6 text-lg leading-relaxed text-pretty">
           <Reveal>
             <p>
-              I build full-stack software. Right now that means{" "}
-              <a
-                href="/projects#frat-house-frenzy"
-                className="underline decoration-signal decoration-2 underline-offset-4"
-              >
-                a crypto casino slot engine
-              </a>{" "}
-              calibrated to 96% RTP with HMAC-seeded RNG the player can verify.
-              Before that it was smaller things — tools for myself, weekend
-              experiments, a lot of half-finished ideas.
+              I build full-stack software. The stuff I care about tends to sit
+              in the gap between &quot;this works&quot; and &quot;this feels
+              right&quot; — the last twenty percent that nobody else wants to
+              finish.
             </p>
           </Reveal>
 
           <Reveal delay={0.05}>
-            <p className="text-muted-foreground italic">
-              [placeholder — this section is the origin story. Where you
-              grew up, how you got into code, what pulled you into building
-              real things vs. toy examples. Specific beats general.]
+            <p>
+              Right now that means{" "}
+              <Link
+                href="/projects#frat-house-frenzy"
+                className="underline decoration-signal decoration-2 underline-offset-4"
+              >
+                Frat House Frenzy
+              </Link>
+              . It&apos;s a casino slot engine. From the outside it looks like
+              a game; from the inside it&apos;s a math problem, a concurrency
+              problem, and a trust problem stacked on top of each other. A
+              1024-ways engine calibrated to 96% RTP. RNG that the player can
+              verify with a hash. Bonus rounds that resolve in a single server
+              request so the client has nothing to cheat with. That&apos;s the
+              job.
             </p>
           </Reveal>
 
           <Reveal delay={0.1}>
-            <p className="text-muted-foreground italic">
-              [placeholder — what you&apos;re currently obsessed with,
-              technically. The gap between &quot;works&quot; and &quot;feels
-              great&quot; is the phrase from the positioning; ground it in
-              something concrete you&apos;ve chased recently.]
+            <p>
+              What I&apos;ve learned building it: specificity is everything. A
+              paytable doesn&apos;t produce a 96% RTP because you asked nicely;
+              it produces it because you ran five hundred thousand spins and
+              iterated on the blank weights. Integer-cents floor rounding can
+              make your game look like a scam that pays out zero on common
+              wins. A trailing newline in an env var is the kind of bug that
+              costs you a day. The math has to survive contact with reality.
             </p>
           </Reveal>
 
           <Reveal delay={0.15}>
             <p>
-              What I care about when I build: the math is real, the edges hold
-              up under adversarial use, and the thing actually feels good in
-              your hand. Everything else is decoration.
+              What I care about when I build: the numbers are real, the edges
+              hold up under adversarial use, and the thing feels good the
+              hundredth time you use it, not just the first. Everything else
+              is decoration.
             </p>
           </Reveal>
 
           <Reveal delay={0.2}>
-            <p className="text-muted-foreground italic">
-              [placeholder — what you&apos;re building toward. A year from
-              now, what do you want to have shipped? One sentence is enough.]
+            <p className="text-muted-foreground">
+              You can reach me at{" "}
+              <Link
+                href={`mailto:${site.email}`}
+                className="text-foreground underline decoration-signal decoration-2 underline-offset-4"
+              >
+                {site.email}
+              </Link>
+              , or via the{" "}
+              <Link
+                href="/contact"
+                className="text-foreground underline decoration-signal decoration-2 underline-offset-4"
+              >
+                contact form
+              </Link>
+              .
             </p>
           </Reveal>
         </div>
-
-        <Reveal delay={0.3}>
-          <div className="mt-16 rounded-lg border border-dashed border-border p-6 font-mono text-xs text-muted-foreground">
-            <p className="uppercase tracking-wider">
-              draft note — to be replaced
-            </p>
-            <p className="mt-2 normal-case">
-              This About page has three placeholder paragraphs. Once you drop
-              your raw bullets into chat, I&apos;ll rewrite this page in your
-              voice and delete this note.
-            </p>
-          </div>
-        </Reveal>
       </section>
     </PageTransition>
   );
