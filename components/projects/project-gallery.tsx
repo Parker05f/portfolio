@@ -36,28 +36,33 @@ export function ProjectGallery({ projects }: { projects: Project[] }) {
     [projects],
   );
 
+  // Hide filter bar when there's nothing meaningful to filter
+  const showFilters = projects.length > 1 && availableFilters.length > 2;
+
   return (
     <>
-      <div className="mb-8 flex flex-wrap gap-2 font-mono text-xs">
-        {availableFilters.map((f) => {
-          const active = filter === f.key;
-          return (
-            <button
-              key={f.key}
-              type="button"
-              onClick={() => setFilter(f.key)}
-              aria-pressed={active}
-              className={`rounded-sm border px-3 py-1 uppercase tracking-wider transition-colors ${
-                active
-                  ? "border-foreground bg-foreground text-background"
-                  : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
-              }`}
-            >
-              {f.label}
-            </button>
-          );
-        })}
-      </div>
+      {showFilters && (
+        <div className="mb-8 flex flex-wrap gap-2 font-mono text-xs">
+          {availableFilters.map((f) => {
+            const active = filter === f.key;
+            return (
+              <button
+                key={f.key}
+                type="button"
+                onClick={() => setFilter(f.key)}
+                aria-pressed={active}
+                className={`rounded-sm border px-3 py-1 uppercase tracking-wider transition-colors ${
+                  active
+                    ? "border-foreground bg-foreground text-background"
+                    : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
+                }`}
+              >
+                {f.label}
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       <div className="grid gap-6 md:grid-cols-2">
         <AnimatePresence mode="popLayout">
