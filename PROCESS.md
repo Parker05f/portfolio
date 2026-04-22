@@ -119,8 +119,8 @@ Honest scoring against the rubric in the assignment spec.
 | Research phase | 5 | 5 portfolios studied, notes in RESEARCH.md with specific takeaways and things I rejected. |
 | Planning phase | 5 | PLAN.md written before code. Voice, audience, goals, non-goals all defined. |
 | Prompt quality | 5 | Three full prompts above, each with voice/audience/constraints/iteration explicit. |
-| Iteration in git | 5 | 32 focused commits at ship, `feat:` / `fix:` / `chore:` / `docs:` / `style:` prefixes, intent-describing messages. |
-| Voice alignment | 3 | Site-wide copy and project #1 read as direct/dry/specific. About page is placeholder until I drop real bio bullets — self-knock 2 pts here. |
+| Iteration in git | 5 | 37+ focused commits at ship, `feat:` / `fix:` / `chore:` / `docs:` / `style:` / `refactor:` prefixes, intent-describing messages. |
+| Voice alignment | 5 | Site-wide copy, About, and project writeup all read as direct/dry/specific. Passes the "could this appear on any other portfolio" test. |
 
 ### Part 2: Hero + Remotion (15 pts)
 
@@ -134,8 +134,8 @@ Honest scoring against the rubric in the assignment spec.
 
 | Dimension | Self-score | Reasoning |
 |-----------|------------|-----------|
-| Project presentation | 3 | Frat House Frenzy is full (problem / solution / stack / live / learnings). Two placeholder cards are real placeholders — will lose points on the "3 projects" requirement until replaced. |
-| Gallery interaction | 5 | Tag filters with animated layout shifts via Framer Motion `AnimatePresence + layout`. Hover lifts card. Featured card spans 2 columns. Filters hide empty categories. |
+| Project presentation | 3 | Frat House Frenzy is a full writeup (problem / solution / stack / live / five specific learnings). Only one project shipped, so I miss the "at least 3 projects" rubric bar — honest self-knock. Gallery infrastructure can take more with no code changes. |
+| Gallery interaction | 4 | Filters, hover lift, animated layout via `AnimatePresence`, featured card spans 2 columns. Filter bar is now hidden when there's only one project — the infrastructure is there, the content isn't yet. Docking 1 pt because the interaction doesn't earn its complexity with one card. |
 
 ### Part 4: Contact Form (5 pts)
 
@@ -170,8 +170,8 @@ Honest scoring against the rubric in the assignment spec.
 
 | Dimension | Self-score | Reasoning |
 |-----------|------------|-----------|
-| Voice alignment | 4 | Nav, footer, project card, contact form, and home positioning all land in the "direct, dry, specific" register. Docking 1 pt until About is replaced. |
-| About page substance | 1 | Currently placeholder. Self-flagged as TODO in the page itself. Will jump to 4-5 once real bio bullets are dropped. |
+| Voice alignment | 5 | Nav, footer, project card, contact form, home positioning, AND About all land in the "direct, dry, specific" register. |
+| About page substance | 3 | The About is honest about what it is: an About about the work, grounded in the real technical detail from FHF (Monte Carlo calibrator, integer-cents floor bug, env-var newline). It doesn't invent biography. A 5 would require an origin moment and current obsession I don't have data for. |
 | Project write-ups | 5 | Frat House Frenzy has problem-first framing, five specific lessons, and technical detail (Monte Carlo calibrator, HMAC-SHA256, Better Auth cookie edge cases). Cannot be written without knowing the work. |
 | Direction test | 5 | Three full prompt examples above describe exactly how the voice was set and iterated. Not a hand-wave. |
 
@@ -193,28 +193,28 @@ Others deferred (MDX blog, OG images, analytics). Domain left on `*.vercel.app`.
 
 | Section | Max | Self-score |
 |---------|----:|-----------:|
-| Process & Direction | 25 | 23 |
+| Process & Direction | 25 | 25 |
 | Hero + Remotion | 15 | 14 |
-| Portfolio Gallery | 10 | 8 |
+| Portfolio Gallery | 10 | 7 |
 | Contact Form | 5 | 5 |
 | Design Tokens | 10 | 9 |
 | Typography | 10 | 9 |
 | Microanimations | 10 | 10 |
-| Copywriting | 10 | 6* |
+| Copywriting | 10 | 8 |
 | Code Quality | 5 | 5 |
-| **Base total** | **100** | **89** |
+| **Base total** | **100** | **92** |
 | Dark mode bonus | +2 | +2 |
-| **Grand total** | **120** | **91 / 100** + **2 bonus = 93** |
+| **Grand total** | **120** | **92 / 100** + **2 bonus = 94** |
 
-\* Copywriting jumps to 9 once About is replaced with real bio. Gallery jumps to 10 once projects 2 & 3 are real. So the **real ceiling of this build is ~95 base + 2 bonus = 97**, gated on:
-1. Replacing two placeholder projects
-2. Replacing About page placeholders
-3. Adding a real GitHub link for Frat House Frenzy
+Gated upside gets this into the 95+ band:
+1. Adding a real GitHub link for Frat House Frenzy ( +1 gallery presentation)
+2. Shipping two more real projects ( +2 gallery, +1 voice variety)
+3. Adding an origin-story paragraph to About once there's personal detail to add ( +2 About substance)
 
-Fix those three and this hits the 90–100 band ("portfolio-defining, ready to share").
+Fix those and this hits the 95–100 band ("portfolio-defining, ready to share").
 
 ---
 
 ## 6. One-paragraph reflection
 
-Biggest thing I learned: writing the voice brief before the first line of copy is the lever. The prompts that produced good copy all started with the same three adjectives — direct, dry, specific — and anti-references like "never write 'passionate developer.'" The prompts that produced generic drafts were the ones where I forgot to set voice and just asked for "an About page." What I'd improve: the placeholder-in-place approach for About and Projects 2/3 feels wrong — better to hold those pages out of the nav entirely until they have real content, so the site ships smaller and truer rather than shipping with visible TODOs.
+Biggest thing I learned: writing the voice brief before the first line of copy is the lever. The prompts that produced good copy all started with the same three adjectives — direct, dry, specific — and anti-references like "never write 'passionate developer.'" The prompts that produced generic drafts were the ones where I forgot to set voice and just asked for "an About page." What I'd improve: I ended up trimming this down to one real project and an About-about-the-work rather than shipping with visible TODO placeholders. That felt right in the moment but it highlights the gap — a portfolio is only as strong as the work it shows, and the honest answer is "one real thing I'm proud of" rather than "three things, two of which I faked." The version of this that hits the 95+ band isn't a better scaffold; it's more shipped work.
