@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { projects } from "@/lib/projects";
 import { ProjectGallery } from "@/components/projects/project-gallery";
 import { PageTransition } from "@/components/motion/page-transition";
+import { DecorDivider } from "@/components/decor/decor-divider";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -25,6 +26,8 @@ export default function ProjectsPage() {
             as things ship.
           </p>
         </header>
+
+        <DecorDivider className="mb-10" />
 
         <ProjectGallery projects={projects} />
       </section>

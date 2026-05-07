@@ -2,6 +2,8 @@ import Link from "next/link";
 import { HeroPlayer } from "@/components/hero/hero-player";
 import { Reveal } from "@/components/motion/reveal";
 import { PageTransition } from "@/components/motion/page-transition";
+import { DecorDivider } from "@/components/decor/decor-divider";
+import { DecorSpot } from "@/components/decor/decor-spot";
 import { site } from "@/lib/site";
 import { featuredProject } from "@/lib/projects";
 
@@ -13,7 +15,12 @@ export default function Home() {
           <HeroPlayer name={site.name.toLowerCase()} />
         </div>
 
-        <div className="mt-8 sm:mt-14 max-w-3xl">
+        <DecorDivider className="mt-8 sm:mt-14" />
+
+        <div className="relative mt-6 sm:mt-10 max-w-3xl">
+          <div className="pointer-events-none absolute -right-2 -top-2 hidden sm:block">
+            <DecorSpot variant="chrome" />
+          </div>
           <span className="sr-only">{site.name}</span>
           <Reveal>
             <h1 className="text-3xl sm:text-4xl leading-tight text-balance">

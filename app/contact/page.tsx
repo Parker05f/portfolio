@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ContactForm } from "@/components/contact/contact-form";
 import { PageTransition } from "@/components/motion/page-transition";
+import { DecorSpot } from "@/components/decor/decor-spot";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -12,7 +13,10 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <PageTransition>
-      <section className="mx-auto w-full max-w-2xl px-4 py-16 sm:px-6">
+      <section className="relative mx-auto w-full max-w-2xl px-4 py-16 sm:px-6">
+        <div className="pointer-events-none absolute right-2 top-12 hidden sm:block">
+          <DecorSpot variant="chrome" />
+        </div>
         <header className="mb-10">
           <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
             contact
