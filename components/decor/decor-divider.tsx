@@ -21,7 +21,7 @@ export function DecorDivider({ className = "" }: { className?: string }) {
           alt=""
           fill
           sizes="(min-width: 768px) 768px, 100vw"
-          className="object-contain opacity-70 dark:opacity-90 mix-blend-multiply dark:mix-blend-screen"
+          className="object-contain opacity-60 dark:opacity-80 mix-blend-multiply dark:mix-blend-screen"
           priority={false}
         />
       ) : (

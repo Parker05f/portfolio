@@ -32,7 +32,7 @@ export function DecorSpot({
           alt=""
           fill
           sizes="112px"
-          className="object-contain opacity-90"
+          className="object-contain opacity-70 mix-blend-multiply dark:mix-blend-screen dark:opacity-85"
         />
       ) : variant === "chrome" ? (
         <FallbackChrome />

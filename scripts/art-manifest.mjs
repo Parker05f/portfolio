@@ -1,17 +1,39 @@
 /**
  * Decorative-accent prompts for the portfolio.
  *
- * Aesthetic: retro-futurist / vaporwave — synthwave grids, chrome geometry,
- * gradient suns, soft scanlines. SMALL accents only: dividers, spot
- * illustrations, footer ornaments. The site stays restrained; the AI art
- * earns its place by being specific and well-cropped.
+ * Aesthetic: retro-futurist linework, dialed to the site's actual palette
+ * (warm cream/parchment surface + deep ink, chartreuse-lime signal, coral
+ * flame accent). NOT magenta-and-cyan vaporwave — that clashed with the
+ * warm cream. Pieces should read as ornament/line-art, not full scenes.
  *
- * Output: public/ai/<id>.png
+ * Output: public/ai/<id>.png (transparent backgrounds).
  *
  * gpt-image-1 supported sizes: 1024x1024, 1024x1536, 1536x1024.
- * Backgrounds: "transparent" lets us float pieces over the warm/dark surfaces
- * without fighting the existing palette.
  */
+
+const PALETTE = [
+  "STRICT palette: only these colors are allowed —",
+  "chartreuse lime green (#cdf24a-like), warm coral (#f08367-like),",
+  "deep ink charcoal (#21222b-like) for line strokes, and the implicit",
+  "transparent background. Absolutely no magenta, no cyan, no purple,",
+  "no neon pink, no dark navy fills.",
+].join(" ");
+
+const STYLE = [
+  "Style: thin clean linework, retro-futurist ornament, hand-drawn",
+  "vector feel, no photoreal rendering, no gradients except a single",
+  "subtle chartreuse-to-coral wash on the sun/light source.",
+  "Composition: minimal — one or two simple shapes with lots of empty",
+  "transparent space. This is a tiny decoration sitting next to text,",
+  "not a hero image.",
+].join(" ");
+
+const RULES = [
+  "MUST be transparent PNG — no rectangular background fill of any color.",
+  "MUST have generous empty space around the subject.",
+  "Do not add text, logos, watermarks, or signatures.",
+  "Do not add people, characters, or faces.",
+].join(" ");
 
 export const manifest = [
   {
@@ -19,50 +41,70 @@ export const manifest = [
     size: "1536x1024",
     background: "transparent",
     quality: "high",
-    prompt:
-      "Wide horizontal vaporwave decorative ornament, transparent background. " +
-      "A thin neon-pink and cyan perspective grid stretching to a horizon, with " +
-      "a small chartreuse-to-coral gradient half-sun cresting the horizon. " +
-      "Faint scanlines, soft chromatic aberration. Centered, symmetric, looks " +
-      "like a divider between page sections. No text, no logos, no people. " +
-      "Crisp 80s-computing vector look — not photorealistic. Composition " +
-      "leaves generous empty space top and bottom so it sits as a slim band.",
+    prompt: [
+      "Slim horizontal ornamental divider, transparent background.",
+      "A thin one-point-perspective grid in deep-ink charcoal strokes",
+      "stretching to a centered horizon line, with a small half-sun",
+      "cresting the horizon — the sun has a soft chartreuse-to-coral",
+      "gradient fill, everything else is line only.",
+      "The composition is a wide thin band: the subject occupies only",
+      "the middle vertical third, with empty transparent space above",
+      "and below so it sits as a quiet divider, not a poster.",
+      PALETTE,
+      STYLE,
+      RULES,
+    ].join(" "),
   },
   {
     id: "spot-chrome-shape",
     size: "1024x1024",
     background: "transparent",
     quality: "high",
-    prompt:
-      "Single chrome-and-magenta retro-futurist geometric ornament, transparent " +
-      "background. A tilted chrome torus or twisted ribbon catching neon pink " +
-      "and cyan reflections, faint gradient haze, no environment, no shadow on " +
-      "ground. Clean centered composition with breathing room. 80s-album-cover " +
-      "energy but minimal — one object, not a busy scene. No text.",
+    prompt: [
+      "Single tilted ring ornament centered in a square frame,",
+      "transparent background. A clean elliptical band drawn in",
+      "deep-ink charcoal linework, with a soft chartreuse-to-coral",
+      "gradient fill inside the band only — like a planet ring viewed",
+      "at an angle. No environment, no shadow, no extra geometry.",
+      "Lots of empty transparent space around the ring.",
+      PALETTE,
+      STYLE,
+      RULES,
+    ].join(" "),
   },
   {
     id: "spot-palm-grid",
     size: "1024x1024",
     background: "transparent",
     quality: "high",
-    prompt:
-      "Small vaporwave spot illustration, transparent background. A single " +
-      "wireframe palm tree silhouette in cyan over a faint magenta grid floor, " +
-      "compact composition centered in the frame. Thin clean lines, no " +
-      "photorealism, no text, no extra decoration. Reads as a tiny ornament " +
-      "next to a paragraph, not a hero image.",
+    prompt: [
+      "Tiny ornamental palm-and-grid spot, transparent background.",
+      "A single small wireframe palm tree drawn in deep-ink charcoal",
+      "thin strokes, standing on a faint chartreuse perspective grid",
+      "floor. The whole subject occupies only the center 50% of the",
+      "frame, surrounded by empty transparent space. Linework only —",
+      "no fills except a tiny coral dot for a setting sun behind the",
+      "palm.",
+      PALETTE,
+      STYLE,
+      RULES,
+    ].join(" "),
   },
   {
     id: "footer-band",
     size: "1536x1024",
     background: "transparent",
     quality: "high",
-    prompt:
-      "Wide thin footer ornament band, transparent background. Subtle " +
-      "horizontal synthwave gradient strip — magenta to cyan — overlaid with " +
-      "tiny pixel stars and a faint scanline texture. Extremely minimal, sits " +
-      "as a 6%-opacity-feeling decoration. No text, no characters, no logos. " +
-      "Composition heavy bottom edge, lots of empty space above so the band is " +
-      "visually thin.",
+    prompt: [
+      "Very thin horizontal footer ornament, transparent background.",
+      "A subtle chartreuse-to-coral gradient hairline running across",
+      "the middle of the frame, with a sparse scatter of tiny pixel",
+      "stars in deep-ink charcoal above and below it. Extremely",
+      "minimal — feels like a 1px decorative rule with a few dots,",
+      "not an image. Heavy empty transparent space top and bottom.",
+      PALETTE,
+      STYLE,
+      RULES,
+    ].join(" "),
   },
 ];
