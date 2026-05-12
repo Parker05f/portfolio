@@ -50,20 +50,20 @@ export const HeroComposition: React.FC<HeroProps> = ({ name }) => {
   return (
     <AbsoluteFill
       style={{
-        backgroundColor: "var(--background)",
+        // Transparent so the AI accent behind the player shows through.
+        backgroundColor: "transparent",
         color: "var(--foreground)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        // Generous padding so italic descenders/ascenders don't clip.
-        padding: "48px 80px",
+        padding: "32px 80px",
       }}
     >
       <div style={{ textAlign: "center", width: "100%" }}>
         <div
           style={{
             fontFamily: "var(--font-display), serif",
-            fontSize: Math.min(width * 0.12, 180),
+            fontSize: Math.min(width * 0.1, 140),
             lineHeight: 0.95,
             letterSpacing: "-0.03em",
             fontStyle: "italic",

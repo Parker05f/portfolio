@@ -1,6 +1,7 @@
 "use client";
 
 import { Player } from "@remotion/player";
+import Image from "next/image";
 import { useState } from "react";
 import { usePrefersReducedMotion } from "@/lib/use-media-query";
 import {
@@ -17,9 +18,10 @@ type Props = HeroProps & {
 /**
  * Embeds the Remotion hero composition as a browser-playable Player.
  * - Autoplays on mount
- * - Holds on last frame instead of looping (no "overstay welcome")
+ * - Holds on last frame (moveToBeginningWhenEnded=false) so text persists
  * - Respects prefers-reduced-motion — renders last frame immediately
  * - Click to replay
+ * - Decorative AI art sits behind the player (composition is transparent)
  */
 export function HeroPlayer({ name, className }: Props) {
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -32,35 +34,46 @@ export function HeroPlayer({ name, className }: Props) {
       aria-label="Replay hero animation"
       className={className}
       style={{
+        position: "relative",
         width: "100%",
-        // Banner-shape hero: bounded so it never eats half the page on wide
-        // screens, never collapses to nothing on narrow ones.
-        height: "clamp(280px, 48vw, 520px)",
+        height: "clamp(220px, 38vw, 380px)",
         background: "transparent",
         border: "none",
         padding: 0,
         cursor: "pointer",
+        overflow: "hidden",
       }}
     >
-      <Player
-        key={key}
-        acknowledgeRemotionLicense
-        component={HeroComposition}
-        inputProps={{ name }}
-        durationInFrames={HERO_DURATION_IN_FRAMES}
-        fps={HERO_FPS}
-        compositionWidth={1600}
-        compositionHeight={780}
-        style={{ width: "100%", height: "100%" }}
-        autoPlay={!prefersReducedMotion}
-        initialFrame={
-          prefersReducedMotion ? HERO_DURATION_IN_FRAMES - 1 : undefined
-        }
-        controls={false}
-        loop={false}
-        clickToPlay={false}
-        showVolumeControls={false}
+      <Image
+        src="/ai/divider-grid-sun.png"
+        alt=""
+        fill
+        priority
+        sizes="(min-width: 768px) 768px, 100vw"
+        className="object-contain opacity-60 dark:opacity-80 mix-blend-multiply dark:mix-blend-screen pointer-events-none"
       />
+      <div style={{ position: "relative", width: "100%", height: "100%" }}>
+        <Player
+          key={key}
+          acknowledgeRemotionLicense
+          component={HeroComposition}
+          inputProps={{ name }}
+          durationInFrames={HERO_DURATION_IN_FRAMES}
+          fps={HERO_FPS}
+          compositionWidth={1600}
+          compositionHeight={600}
+          style={{ width: "100%", height: "100%" }}
+          autoPlay={!prefersReducedMotion}
+          initialFrame={
+            prefersReducedMotion ? HERO_DURATION_IN_FRAMES - 1 : undefined
+          }
+          controls={false}
+          loop={false}
+          clickToPlay={false}
+          showVolumeControls={false}
+          moveToBeginningWhenEnded={false}
+        />
+      </div>
     </button>
   );
 }
