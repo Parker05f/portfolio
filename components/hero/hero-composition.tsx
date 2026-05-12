@@ -9,11 +9,12 @@ import {
 /**
  * Hero composition — plays once, holds on final frame.
  *
- * Beats (at 30fps, ~90 frames total):
- *   0–20   Name letters assemble from a slight vertical offset + blur.
- *   15–40  Tag row slides in under the name.
- *   35–55  Tags cycle through roles; last tag ("builder") lands.
- *   45–90  Signal-color underline sweeps left-to-right under the name.
+ * Beats (30fps, 90 frames total):
+ *   0–24   Name letters assemble from a vertical offset + blur.
+ *   18–36  Tag row fades in below the name.
+ *   30–60  Tags cycle through roles; last tag lands.
+ *   42–72  Signal-color underline sweeps left-to-right under the name.
+ *   60–90  A thin mono-style "currently:" caption fades in at top-left.
  */
 
 export const HERO_DURATION_IN_FRAMES = 90;
@@ -27,110 +28,129 @@ export type HeroProps = {
 
 export const HeroComposition: React.FC<HeroProps> = ({ name }) => {
   const frame = useCurrentFrame();
-  const { fps, width, height } = useVideoConfig();
+  const { fps, width } = useVideoConfig();
 
-  // Name letters animate in with staggered spring
   const letters = name.split("");
 
-  // Tag cycling: each tag gets a window of ~6 frames at 30fps
   const tagIndex = Math.min(
-    Math.floor(interpolate(frame, [30, 60], [0, TAGS.length - 1], {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
-    })),
+    Math.floor(
+      interpolate(frame, [30, 60], [0, TAGS.length - 1], {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      }),
+    ),
     TAGS.length - 1,
   );
 
-  // Underline sweep
-  const underlineProgress = interpolate(frame, [45, 75], [0, 1], {
+  const underlineProgress = interpolate(frame, [42, 72], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
 
+  const captionOpacity = interpolate(frame, [60, 80], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  const fontSize = Math.min(width * 0.14, 220);
+
   return (
     <AbsoluteFill
       style={{
-        // Transparent so the AI accent behind the player shows through.
-        backgroundColor: "transparent",
+        backgroundColor: "var(--background)",
         color: "var(--foreground)",
         display: "flex",
-        alignItems: "center",
+        flexDirection: "column",
         justifyContent: "center",
-        padding: "32px 80px",
+        alignItems: "flex-start",
+        padding: "56px 80px",
       }}
     >
-      <div style={{ textAlign: "center", width: "100%" }}>
-        <div
-          style={{
-            fontFamily: "var(--font-display), serif",
-            fontSize: Math.min(width * 0.1, 140),
-            lineHeight: 0.95,
-            letterSpacing: "-0.03em",
-            fontStyle: "italic",
-            position: "relative",
-            display: "inline-block",
-          }}
-        >
-          {letters.map((char, i) => {
-            const enter = spring({
-              frame: frame - i * 1.5,
-              fps,
-              config: { damping: 20, stiffness: 120, mass: 0.6 },
-            });
-            return (
-              <span
-                key={i}
-                style={{
-                  display: "inline-block",
-                  transform: `translateY(${interpolate(enter, [0, 1], [20, 0])}px)`,
-                  opacity: enter,
-                  filter: `blur(${interpolate(enter, [0, 1], [6, 0])}px)`,
-                  whiteSpace: char === " " ? "pre" : "normal",
-                }}
-              >
-                {char}
-              </span>
-            );
-          })}
-
-          {/* Underline sweep in signal color */}
-          <div
-            style={{
-              position: "absolute",
-              left: 0,
-              right: 0,
-              bottom: -8,
-              height: 6,
-              backgroundColor: "var(--signal)",
-              transformOrigin: "left center",
-              transform: `scaleX(${underlineProgress})`,
-              borderRadius: 2,
-            }}
-          />
-        </div>
-
-        <div
-          style={{
-            marginTop: 28,
-            fontFamily: "var(--font-mono), monospace",
-            fontSize: Math.min(width * 0.02, 18),
-            letterSpacing: "0.04em",
-            color: "var(--muted-foreground)",
-            opacity: interpolate(frame, [20, 35], [0, 1], {
-              extrapolateLeft: "clamp",
-              extrapolateRight: "clamp",
-            }),
-            textTransform: "uppercase",
-          }}
-        >
-          <span>· {TAGS[tagIndex]} ·</span>
-        </div>
+      {/* Top-left small caption */}
+      <div
+        style={{
+          fontFamily: "var(--font-mono), monospace",
+          fontSize: Math.min(width * 0.018, 18),
+          letterSpacing: "0.08em",
+          textTransform: "uppercase",
+          color: "var(--muted-foreground)",
+          opacity: captionOpacity,
+          marginBottom: "auto",
+        }}
+      >
+        <span style={{ color: "var(--signal)" }}>●</span>{" "}
+        <span>portfolio · v3 · 2026</span>
       </div>
 
-      {/* Height used purely to silence unused-var lint in the rare case. */}
-      <span style={{ display: "none" }} aria-hidden>
-        {height}
-      </span>
+      {/* Name + underline */}
+      <div
+        style={{
+          fontFamily: "var(--font-display), serif",
+          fontSize,
+          lineHeight: 0.9,
+          letterSpacing: "-0.04em",
+          fontStyle: "italic",
+          position: "relative",
+          display: "inline-block",
+        }}
+      >
+        {letters.map((char, i) => {
+          const enter = spring({
+            frame: frame - i * 2,
+            fps,
+            config: { damping: 22, stiffness: 130, mass: 0.7 },
+          });
+          return (
+            <span
+              key={i}
+              style={{
+                display: "inline-block",
+                transform: `translateY(${interpolate(enter, [0, 1], [28, 0])}px)`,
+                opacity: enter,
+                filter: `blur(${interpolate(enter, [0, 1], [8, 0])}px)`,
+                whiteSpace: char === " " ? "pre" : "normal",
+              }}
+            >
+              {char}
+            </span>
+          );
+        })}
+
+        <div
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            bottom: -10,
+            height: 8,
+            backgroundColor: "var(--signal)",
+            transformOrigin: "left center",
+            transform: `scaleX(${underlineProgress})`,
+            borderRadius: 1,
+          }}
+        />
+      </div>
+
+      {/* Cycling tag */}
+      <div
+        style={{
+          marginTop: 28,
+          fontFamily: "var(--font-mono), monospace",
+          fontSize: Math.min(width * 0.018, 18),
+          letterSpacing: "0.06em",
+          color: "var(--muted-foreground)",
+          opacity: interpolate(frame, [18, 36], [0, 1], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+          }),
+          textTransform: "lowercase",
+        }}
+      >
+        <span style={{ color: "var(--foreground)" }}>{TAGS[tagIndex]}</span>
+        <span style={{ marginLeft: 12, opacity: 0.5 }}>
+          / {tagIndex + 1} of {TAGS.length}
+        </span>
+      </div>
     </AbsoluteFill>
   );
 };

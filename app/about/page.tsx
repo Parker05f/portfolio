@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/motion/reveal";
 import { PageTransition } from "@/components/motion/page-transition";
-import { DecorSpot } from "@/components/decor/decor-spot";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -14,16 +13,15 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <PageTransition>
-      <section className="relative mx-auto w-full max-w-3xl px-4 py-16 sm:px-6">
-        <div className="pointer-events-none absolute right-2 top-10 hidden sm:block">
-          <DecorSpot variant="palm" />
-        </div>
-        <header className="mb-12">
-          <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+      <section className="mx-auto w-full max-w-3xl px-4 py-16 sm:px-6">
+        <header className="mb-14">
+          <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
             about
           </p>
-          <h1 className="mt-3 font-display text-5xl sm:text-6xl leading-none">
-            Short version.
+          <h1 className="mt-3 font-display text-5xl sm:text-7xl leading-[0.95]">
+            Short
+            <br />
+            <span className="italic">version.</span>
           </h1>
         </header>
 

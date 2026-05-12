@@ -20,14 +20,22 @@ export function Navbar() {
       <nav className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between px-4 sm:px-6">
         <Link
           href="/"
-          className="font-mono text-sm tracking-tight link-underline"
-          data-active={pathname === "/"}
+          className="group flex items-center gap-2.5 font-mono text-sm tracking-tight"
           aria-label={`${site.name} home`}
         >
-          <span className="hidden sm:inline">
-            {site.name.toLowerCase()}
+          <span
+            aria-hidden
+            className="inline-block h-2 w-2 rounded-sm bg-signal transition-transform duration-300 group-hover:rotate-45"
+          />
+          <span
+            className="link-underline"
+            data-active={pathname === "/"}
+          >
+            <span className="hidden sm:inline">
+              {site.name.toLowerCase()}
+            </span>
+            <span className="sm:hidden">pf.</span>
           </span>
-          <span className="sm:hidden">pf.</span>
         </Link>
         <div className="flex items-center gap-1 sm:gap-2">
           <ul className="flex items-center gap-3 sm:gap-5 font-mono text-xs sm:text-sm">

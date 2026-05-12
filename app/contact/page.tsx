@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ContactForm } from "@/components/contact/contact-form";
 import { PageTransition } from "@/components/motion/page-transition";
-import { DecorSpot } from "@/components/decor/decor-spot";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -13,20 +12,17 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <PageTransition>
-      <section className="relative mx-auto w-full max-w-2xl px-4 py-16 sm:px-6">
-        <div className="pointer-events-none absolute right-2 top-12 hidden sm:block">
-          <DecorSpot variant="chrome" />
-        </div>
-        <header className="mb-10">
-          <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+      <section className="mx-auto w-full max-w-2xl px-4 py-16 sm:px-6">
+        <header className="mb-12">
+          <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
             contact
           </p>
-          <h1 className="mt-3 font-display text-5xl sm:text-6xl leading-none">
-            Say hi.
+          <h1 className="mt-3 font-display text-5xl sm:text-7xl leading-[0.95]">
+            Say <span className="italic">hi.</span>
           </h1>
           <p className="mt-6 text-lg text-muted-foreground text-pretty">
             The form sends email. I read everything and reply to the ones I
-            can. If you&apos;d rather skip the form, email{" "}
+            can. Or skip the form and email{" "}
             <Link
               href={`mailto:${site.email}`}
               className="text-foreground underline decoration-signal decoration-2 underline-offset-4"

@@ -23,23 +23,32 @@ type Props = {
 
 export function ProjectCard({ project, featured = false }: Props) {
   const reduced = useReducedMotion();
+  const isWip = project.status !== "shipped";
 
   return (
     <motion.article
       id={project.slug}
       whileHover={reduced ? undefined : { y: -2 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className={`group relative flex flex-col rounded-lg border border-border bg-card p-6 transition-colors hover:border-foreground ${
+      className={`group relative flex flex-col rounded-lg border border-border bg-card p-6 transition-colors hover:border-foreground sm:p-8 ${
         featured ? "md:col-span-2" : ""
-      }`}
+      } ${isWip ? "opacity-90 border-dashed" : ""}`}
     >
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-            {project.tags.join(" · ")}
-            {project.status !== "shipped" ? " · wip" : ""}
+          <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
+            <span
+              aria-hidden
+              className={`inline-block h-1.5 w-1.5 rounded-full ${
+                isWip ? "bg-flame" : "bg-signal"
+              }`}
+            />
+            <span>
+              {project.tags.join(" · ")}
+              {isWip ? " · wip" : ""}
+            </span>
           </p>
-          <h3 className="mt-2 font-display text-3xl leading-tight sm:text-4xl">
+          <h3 className="mt-3 font-display text-3xl leading-[0.95] sm:text-4xl">
             {project.name}
           </h3>
         </div>
@@ -69,61 +78,69 @@ export function ProjectCard({ project, featured = false }: Props) {
         </div>
       </div>
 
-      <p className="mt-4 text-lg leading-relaxed text-pretty">
+      <p className="mt-5 text-lg leading-relaxed text-pretty">
         {project.oneLiner}
       </p>
 
-      <div className="mt-6 grid gap-6 sm:grid-cols-2">
-        <section>
-          <h4 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-            problem
-          </h4>
-          <p className="mt-2 text-sm leading-relaxed text-pretty">
-            {project.problem}
-          </p>
-        </section>
-        <section>
-          <h4 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-            solution
-          </h4>
-          <p className="mt-2 text-sm leading-relaxed text-pretty">
-            {project.solution}
-          </p>
-        </section>
-      </div>
+      {!isWip && (
+        <>
+          <div className="mt-6 grid gap-6 sm:grid-cols-2">
+            <section>
+              <h4 className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                problem
+              </h4>
+              <p className="mt-2 text-sm leading-relaxed text-pretty">
+                {project.problem}
+              </p>
+            </section>
+            <section>
+              <h4 className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                solution
+              </h4>
+              <p className="mt-2 text-sm leading-relaxed text-pretty">
+                {project.solution}
+              </p>
+            </section>
+          </div>
 
-      <section className="mt-6">
-        <h4 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-          stack
-        </h4>
-        <ul className="mt-2 flex flex-wrap gap-1.5 font-mono text-xs">
-          {project.stack.map((tech) => (
-            <li
-              key={tech}
-              className="rounded-sm border border-border px-2 py-0.5 text-muted-foreground"
-            >
-              {tech}
-            </li>
-          ))}
-        </ul>
-      </section>
+          {project.stack.length > 0 && (
+            <section className="mt-6">
+              <h4 className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                stack
+              </h4>
+              <ul className="mt-3 flex flex-wrap gap-1.5 font-mono text-xs">
+                {project.stack.map((tech) => (
+                  <li
+                    key={tech}
+                    className="rounded-sm border border-border px-2 py-1 text-muted-foreground"
+                  >
+                    {tech}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
 
-      <section className="mt-6">
-        <h4 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-          what broke · what I learned
-        </h4>
-        <ul className="mt-2 space-y-2 text-sm leading-relaxed">
-          {project.learnings.map((lesson, i) => (
-            <li key={i} className="flex gap-3">
-              <span
-                aria-hidden
-                className="mt-2 h-1 w-1 shrink-0 rounded-full bg-signal"
-              />
-              <span className="text-pretty">{lesson}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
+          {project.learnings.length > 0 && (
+            <section className="mt-6">
+              <h4 className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                what broke · what I learned
+              </h4>
+              <ul className="mt-3 space-y-2.5 text-sm leading-relaxed">
+                {project.learnings.map((lesson, i) => (
+                  <li key={i} className="flex gap-3">
+                    <span
+                      aria-hidden
+                      className="mt-2 h-1 w-1 shrink-0 rounded-full bg-signal"
+                    />
+                    <span className="text-pretty">{lesson}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+        </>
+      )}
     </motion.article>
   );
 }
