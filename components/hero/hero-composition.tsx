@@ -55,16 +55,15 @@ export const HeroComposition: React.FC<HeroProps> = ({ name }) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        // Generous padding so italic descenders/ascenders don't clip in the
-        // shorter banner-shape composition.
-        padding: "32px 80px",
+        // Generous padding so italic descenders/ascenders don't clip.
+        padding: "48px 80px",
       }}
     >
       <div style={{ textAlign: "center", width: "100%" }}>
         <div
           style={{
             fontFamily: "var(--font-display), serif",
-            fontSize: Math.min(width * 0.1, 140),
+            fontSize: Math.min(width * 0.12, 180),
             lineHeight: 0.95,
             letterSpacing: "-0.03em",
             fontStyle: "italic",
