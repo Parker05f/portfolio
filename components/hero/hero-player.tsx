@@ -33,7 +33,9 @@ export function HeroPlayer({ name, className }: Props) {
       className={className}
       style={{
         width: "100%",
-        aspectRatio: "16 / 9",
+        // Banner-shape hero: bounded height so it never eats half the page,
+        // and never collapses to nothing on narrow viewports.
+        height: "clamp(180px, 38vw, 360px)",
         background: "transparent",
         border: "none",
         padding: 0,
@@ -47,8 +49,10 @@ export function HeroPlayer({ name, className }: Props) {
         inputProps={{ name }}
         durationInFrames={HERO_DURATION_IN_FRAMES}
         fps={HERO_FPS}
+        // Composition aspect ~8/3 matches the container height clamp,
+        // so the Player doesn't letterbox.
         compositionWidth={1600}
-        compositionHeight={900}
+        compositionHeight={600}
         style={{ width: "100%", height: "100%" }}
         autoPlay={!prefersReducedMotion}
         initialFrame={

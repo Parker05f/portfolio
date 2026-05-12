@@ -56,6 +56,34 @@ export const projects: Project[] = [
     featured: true,
     status: "shipped",
   },
+  {
+    slug: "untitled-02",
+    name: "Untitled (#2)",
+    oneLiner:
+      "Writeup pending. Real work, real bugs — the case study just isn't ready to ship yet.",
+    problem: "TODO — what this project exists to solve.",
+    solution: "TODO — how it actually works and the constraints that shaped it.",
+    stack: [],
+    tags: ["experiment"],
+    links: {},
+    learnings: [],
+    featured: false,
+    status: "in-progress",
+  },
+  {
+    slug: "untitled-03",
+    name: "Untitled (#3)",
+    oneLiner:
+      "Writeup pending. Real work, real bugs — the case study just isn't ready to ship yet.",
+    problem: "TODO — what this project exists to solve.",
+    solution: "TODO — how it actually works and the constraints that shaped it.",
+    stack: [],
+    tags: ["tool"],
+    links: {},
+    learnings: [],
+    featured: false,
+    status: "in-progress",
+  },
 ];
 
 export const featuredProject = projects.find((p) => p.featured)!;

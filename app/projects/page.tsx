@@ -21,9 +21,8 @@ export default function ProjectsPage() {
             What I&apos;m building.
           </h1>
           <p className="mt-6 text-lg text-muted-foreground text-pretty">
-            One writeup for now. Problem first, what broke last. The
-            interesting part is usually the second one. More will land here
-            as things ship.
+            One finished writeup, two in flight. Problem first, what broke
+            last. The interesting part is usually the second one.
           </p>
         </header>
 
