@@ -42,7 +42,10 @@ export function ProjectGallery({ projects }: { projects: Project[] }) {
   return (
     <>
       {showFilters && (
-        <div className="mb-8 flex flex-wrap gap-2 font-mono text-xs">
+        <div className="mb-10 flex flex-wrap items-center gap-2 font-mono text-xs">
+          <span className="mr-2 text-muted-foreground uppercase tracking-[0.18em]">
+            filter
+          </span>
           {availableFilters.map((f) => {
             const active = filter === f.key;
             return (
@@ -51,7 +54,7 @@ export function ProjectGallery({ projects }: { projects: Project[] }) {
                 type="button"
                 onClick={() => setFilter(f.key)}
                 aria-pressed={active}
-                className={`rounded-sm border px-3 py-1 uppercase tracking-wider transition-colors ${
+                className={`rounded-sm border px-3 py-1.5 uppercase tracking-[0.14em] transition-colors ${
                   active
                     ? "border-foreground bg-foreground text-background"
                     : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
