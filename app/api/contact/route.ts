@@ -72,7 +72,10 @@ export async function POST(req: Request) {
 
   try {
     const resend = new Resend(apiKey);
-    const { error } = await resend.emails.send({
+
+    // Notification to me — critical. If this fails, the user's message
+    // didn't land, so we surface the error.
+    const notify = await resend.emails.send({
       from,
       to,
       replyTo: email,
@@ -80,12 +83,35 @@ export async function POST(req: Request) {
       text: `From: ${name} <${email}>\n\n${message}`,
     });
 
-    if (error) {
-      console.error("[contact] resend error", error);
+    if (notify.error) {
+      console.error("[contact] notify error", notify.error);
       return NextResponse.json(
         { ok: false, error: "send-failed" },
         { status: 502 },
       );
+    }
+
+    // Thank-you to the submitter — best-effort. Resend's free tier with
+    // onboarding@resend.dev can only send to the verified account email,
+    // so this will silently fail for arbitrary submitters until a custom
+    // domain is verified. Don't block the submission on this.
+    const thanks = await resend.emails.send({
+      from,
+      to: email,
+      replyTo: to,
+      subject: "Thanks for reaching out",
+      text: [
+        `Hey ${name.split(/\s+/)[0] || "there"},`,
+        "",
+        "Thanks for the message — it landed in my inbox and I read everything.",
+        "I'll reply as soon as I can.",
+        "",
+        "— Parker",
+      ].join("\n"),
+    });
+
+    if (thanks.error) {
+      console.warn("[contact] thank-you email failed (non-fatal)", thanks.error);
     }
 
     return NextResponse.json({ ok: true });
